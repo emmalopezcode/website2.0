@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as actionCreators from './actions/actionCreators';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import {Main} from './Components/Main';
+
+// State properties automatically passed to Main
+function mapStateToProps(state) {
+  return {
+     Errs: state.Errs,
+     isDarkMode : state.isDarkMode
+  };
 }
+
+// Function properties automatically passed to Main
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+const App = withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main));
 
 export default App;
